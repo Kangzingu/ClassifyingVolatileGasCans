@@ -1,0 +1,8 @@
+﻿  showResult.cpp
+c:\opencv\build\include\opencv2\core\mat.hpp(1965): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+c:\opencv\build\include\opencv2\core\persistence.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+c:\opencv\build\include\opencv2\core\utility.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+c:\opencv\build\include\opencv2\core\utility.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+c:\users\yaohui\documents\visual studio 2015\projects\cv_project\cv_project\showresult.cpp(219): warning C4018: '<': signed/unsigned mismatch
+  CV_Project.vcxproj -> c:\users\yaohui\documents\visual studio 2015\Projects\CV_Project\Debug\CV_Project.exe
+  CV_Project.vcxproj -> c:\users\yaohui\documents\visual studio 2015\Projects\CV_Project\Debug\CV_Project.pdb (Partial PDB)

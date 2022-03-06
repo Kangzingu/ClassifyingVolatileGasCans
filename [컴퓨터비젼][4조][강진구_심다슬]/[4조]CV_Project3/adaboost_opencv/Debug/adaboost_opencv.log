@@ -1,0 +1,6 @@
+﻿  AdaBooster.cpp
+c:\users\daseul\source\repos\adaboost_opencv\adaboost_opencv\adabooster.cpp(174): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\daseul\source\repos\adaboost_opencv\adaboost_opencv\adabooster.cpp(231): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\daseul\source\repos\adaboost_opencv\adaboost_opencv\adabooster.cpp(302): warning C4244: '=': 'float'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\daseul\source\repos\adaboost_opencv\adaboost_opencv\adabooster.cpp(359): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  adaboost_opencv.vcxproj -> C:\Users\daseul\source\repos\adaboost_opencv\Debug\adaboost_opencv.exe

@@ -1,0 +1,235 @@
+#***** 1 *****#
+LBPpositive1<-read.csv("LBPpositive1.txt",header=FALSE,sep = "\t")
+names(LBPpositive1)<-c("value","startx","starty")
+head(LBPpositive1)
+
+LBPpositive2<-read.csv("LBPpositive2.txt",header=FALSE,sep = "\t")
+names(LBPpositive2)<-c("value","startx","starty")
+head(LBPpositive2)
+
+LBPnegative1<-read.csv("LBPnegative1.txt",header=FALSE,sep = "\t")
+names(LBPnegative1)<-c("value","startx","starty")
+head(LBPnegative1)
+
+
+
+par(mfrow = c(1,1))
+# center, value
+data.LBPpositive2<-subset(LBPpositive2,LBPpositive2$value>=100)
+data.LBPpositive2<-subset(data.LBPpositive2,data.LBPpositive2$value<=150)
+head(data.LBPpositive2)
+plot ((data.LBPpositive2$startx+data.LBPpositive2$starty)/2 ,data.LBPpositive2$value,type="p",col="red")
+
+# center, value
+data.LBPnegative1<-subset(LBPnegative1,LBPnegative1$value>=100)
+data.LBPnegative1<-subset(data.LBPnegative1,data.LBPnegative1$value<=150)
+head(data.LBPnegative1)
+lines ((data.LBPnegative1$startx+data.LBPnegative1$starty)/2 ,data.LBPnegative1$value,type="p",col="green")
+
+# center, value
+data<-subset(LBPpositive1,LBPpositive1$value>=100)
+data<-subset(data,data$value<=150)
+head(data)
+lines ((data$startx+data$starty)/2 ,data$value,type="p",col="blue")
+
+
+par(mfrow = c(2,1))
+hist(data.LBPpositive2$value,  freq=T)
+hist(data$value,  freq=T)
+hist(data.LBPnegative1$value,  freq=T)
+
+#***** 2 *****#
+valueList<-read.csv("weakValueList.txt",header=FALSE,sep = "\n")
+lbp.128<-read.csv("LBP128.txt",header=FALSE,sep = "\n")
+lbp.64<-read.csv("LBP64.txt",header=FALSE,sep = "\n")
+lbp.256<-read.csv("LBP256.txt",header=FALSE,sep = "\n")
+lbp.512<-read.csv("LBP512.txt",header=FALSE,sep = "\n")
+LBPpositive1<-read.csv("LBPpositive1.txt",header=FALSE,sep = "\n")
+
+plot(lbp.64$V1,type = "p",col="red")
+plot(lbp.128$V1,type="p",col="blue")
+plot(valueList$V1,type="p",col="blue")
+plot(lbp.256$V1,type="p",col="blue")
+plot(lbp.512$V1,type="p",col="blue")
+plot(LBPpositive1$V1,type="p",col="blue")
+
+hist(valueList$V1,  freq=T)
+hist(lbp.64$V1,  freq=T)
+hist(lbp.128$V1,  freq=T)
+hist(lbp.256$V1,  freq=T)
+hist(lbp.512$V1,  freq=T)
+hist(LBPpositive1$V1,  freq=T)
+
+#***** 3 *****#
+data<-read.csv("data.txt",header=FALSE,sep = "\t")
+index<-order(data$V14)
+data[index,]
+
+data.tmp<-data[index,c("V4","V5")]
+index.ord<-order(data.tmp$V5)
+data.tmp[index.ord,]
+
+order(data[index,c("V4","V5")])[index.ord]
+
+str(data)
+
+# BORDER들의정확도 확인
+data.bound<-data[data$V4>=100,]
+data.bound$V4
+data.bound<-data.bound[data.bound$V4<=128,]
+data[data$V4>=100&&data$V4<=128,]
+
+((data$V4)>=100)&&((data$V4)<=128)
+
+summary(data)
+
+valueList<-read.csv("valueList.txt",header=FALSE,sep = "\n")
+
+result<-read.csv("result.txt",header=FALSE,sep = "\n")
+
+# k<-0
+# for(i in 1:21){
+#   for(j in 1:24649){
+#     if(result[j]==valueList[i]){
+#       
+#     }
+#   }
+# }
+
+table(result)
+idx<-order(valueList)
+valueList[idx,]
+plot(result$V1)
+
+#subset(result, result$V1==valueList$V1)
+result[result$V1==valueList$V1,]
+
+sum(result[result==valueList$V1,])
+
+
+temp[temp==temp2]
+
+#***** 4 *****#
+#LBP Bayesian 예측
+install.packages("e1071")
+library(e1071)
+library(caret)
+clusterBlueData1<-read.csv("cclusterBlue1.txt",header=FALSE,sep = "\t")
+clusterBlueData2<-read.csv("cclusterBlue2.txt",header=FALSE,sep = "\t")
+clusterBlueData3<-read.csv("cclusterBlue3.txt",header=FALSE,sep = "\t")
+clusterBlueData4<-read.csv("cclusterBlue4.txt",header=FALSE,sep = "\t")
+center1<-as.integer(c(mean(clusterBlueData1[,1]),mean(clusterBlueData1[,2])))
+center2<-as.integer(c(mean(clusterBlueData2[,1]),mean(clusterBlueData2[,2])))
+center3<-as.integer(c(mean(clusterBlueData3[,1]),mean(clusterBlueData3[,2])))
+center4<-as.integer(c(mean(clusterBlueData4[,1]),mean(clusterBlueData4[,2])))
+lbpData<-read.csv("outputLBP.txt",sep="\t",header = FALSE)
+lbp1<-NULL
+lbp2<-NULL
+lbp3<-NULL
+lbp4<-NULL
+for(i in -64:63){
+  for(j in -64:63){
+    if((i%%2==0)&&(j%%2==0)){
+      lbp1<-c(lbp1,lbpData[center1[1]+i,center1[2]+j])
+      lbp2<-c(lbp2,lbpData[center2[1]+i,center2[2]+j])
+      lbp3<-c(lbp3,lbpData[center3[1]+i,center3[2]+j])
+      lbp4<-c(lbp4,lbpData[center4[1]+i,center4[2]+j])
+    }
+  }
+}
+data<-read.csv("result.csv")
+data$X1.23<-as.factor(data$X1.23)
+set.seed(1234)
+sample<-createDataPartition(y=data$X1.23,p=0.7,list=FALSE)
+data.training<-data[sample,]
+data.testing<-data[-sample,]
+data.testing[1,1:4031]=lbp1[1:4031]
+data.testing[2,1:4031]=lbp2[1:4031]
+data.testing[3,1:4031]=lbp3[1:4031]
+data.testing[4,1:4031]=lbp4[1:4031]
+data.model<-naiveBayes(X1.23~.,data.training)
+pred<-predict(data.model,data.testing[1:4,],type='class')
+
+#***** 5 *****#
+clusterBlueData1<-read.csv("cclusterBlue1.txt",header=FALSE,sep = "\t")
+clusterBlueData2<-read.csv("cclusterBlue2.txt",header=FALSE,sep = "\t")
+clusterBlueData3<-read.csv("cclusterBlue3.txt",header=FALSE,sep = "\t")
+clusterBlueData4<-read.csv("cclusterBlue4.txt",header=FALSE,sep = "\t")
+clusterRedData1<-read.csv("cclusterRed.txt",header=FALSE,sep = "\t")
+
+plot(clusterRedData1$V1,clusterRedData1$V2,col='gray')
+result1<-lm(clusterBlueData1$V2~clusterBlueData1$V1)
+summary(result1)
+points(clusterBlueData1,col='red',pch=20,cex=3)
+abline(result1, col="red", lwd=3)
+result2<-lm(clusterBlueData2$V2~clusterBlueData2$V1)
+summary(result2)
+points(clusterBlueData2,col='purple',pch=20,cex=3)
+abline(result2, col="purple", lwd=3)
+result3<-lm(clusterBlueData3$V2~clusterBlueData3$V1)
+summary(result3)
+points(clusterBlueData3,col='blue',pch=20,cex=3)
+abline(result3, col="blue", lwd=3)
+result4<-lm(clusterBlueData4$V2~clusterBlueData4$V1)
+summary(result4)
+points(clusterBlueData4,col='skyblue',pch=20,cex=3)
+abline(result4, col="skyblue", lwd=3)
+
+#***** 6 *****#
+#정규화
+data<-read.csv("data.txt",header=FALSE,sep = "\t")
+head(data)
+# xlim=c(0,3000),ylim=c(0,3000)
+resultManhattan1<-sqrt(((clusterBlueData1$V1-mean(clusterBlueData1[,1]))*(clusterBlueData1$V1-mean(clusterBlueData1[,1])))
+                       +((clusterBlueData1$V2-mean(clusterBlueData1[,2]))*(clusterBlueData1$V2-mean(clusterBlueData1[,2]))))
+clusterBlueData1<-clusterBlueData1[-which(resultManhattan1==max(resultManhattan1)),]
+#clusterBlueData1<-clusterBlueData1[-which(resultManhattan1==min(resultManhattan1)),]
+resultManhattan2<-sqrt(((clusterBlueData2$V1-mean(clusterBlueData2[,1]))*(clusterBlueData2$V1-mean(clusterBlueData2[,1])))
+                       +((clusterBlueData2$V2-mean(clusterBlueData2[,2]))*(clusterBlueData2$V2-mean(clusterBlueData2[,2]))))
+clusterBlueData2<-clusterBlueData2[-which(resultManhattan2==max(resultManhattan2)),]
+#clusterBlueData2<-clusterBlueData2[-which(resultManhattan2==min(resultManhattan2)),]
+resultManhattan3<-sqrt(((clusterBlueData3$V1-mean(clusterBlueData3[,1]))*(clusterBlueData3$V1-mean(clusterBlueData3[,1])))
+                       +((clusterBlueData3$V2-mean(clusterBlueData3[,2]))*(clusterBlueData3$V2-mean(clusterBlueData3[,2]))))
+clusterBlueData3<-clusterBlueData3[-which(resultManhattan3==max(resultManhattan3)),]
+#clusterBlueData3<-clusterBlueData3[-which(resultManhattan3==min(resultManhattan3)),]
+#plot(clusterBlueData1$V1,clusterBlueData1$V2)#Red
+#plot(clusterBlueData2$V1,clusterBlueData2$V2)#Green
+#plot(clusterBlueData3$V1,clusterBlueData3$V2)#Blue
+
+plot(data$V1,data$V2)
+result<-lm(data$V2~data$V1)
+summary(result)
+
+abline(result, col="red", lwd=3)
+
+#정규화
+normalize <- function(x){
+  num <- x-min(x)
+  
+  denom<- max(x)-min(x)
+  return(num/denom)
+}
+clusterBlueData1Norm<-data.frame(lapply(clusterBlueData1,normalize))
+clusterBlueData2Norm<-data.frame(lapply(clusterBlueData2,normalize))
+clusterBlueData3Norm<-data.frame(lapply(clusterBlueData3,normalize))
+clusterRedData1Norm<-data.frame(lapply(clusterRedData1,normalize))
+plot(clusterRedData1Norm$V1,clusterRedData1Norm$V2)
+result1<-lm(clusterBlueData1Norm$V2~clusterBlueData1Norm$V1,method="qr")
+summary(result1)
+points(clusterBlueData1Norm,col='red',pch=20,cex=3)
+abline(result1, col="red", lwd=3)
+result2<-lm(clusterBlueData2Norm$V2~clusterBlueData2Norm$V1,method="qr")
+summary(result2)
+points(clusterBlueData2Norm,col='purple',pch=20,cex=3)
+abline(result2, col="purple", lwd=3)
+result3<-lm(clusterBlueData3Norm$V2~clusterBlueData3Norm$V1,method="qr")
+summary(result3)
+points(clusterBlueData3Norm,col='blue',pch=20,cex=3)
+abline(result3, col="blue", lwd=3)
+?lm
+
+data<-read.csv("inputLBP.txt",header=FALSE,sep = "\t")
+head(data)
+data[300,240]
+length(data[,1])
+ggbb
